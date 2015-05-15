@@ -5,9 +5,10 @@
 # Author:         Dr James Tripp
 # Copyright:      (C) James Tripp 2015
 
-# Define stimuli and parameters to generate false data.
+# Define stimuli
 stimuli <- c(1, 2, 5, 8, 15, 20)
 
+# Define our data generating paramters
 SD <- 0.01
 w <- 0.2
 
