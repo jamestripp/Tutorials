@@ -22,7 +22,7 @@ sd = 0.01;
 # Here we use range frequency theory
 def rft(w):
   R = (s - s.min())/(s.max() - s.min())
-F = np.arange(N, dtype = 'float64')/(s.size - 1)
+  F = np.arange(N, dtype = 'float64')/(s.size - 1)
 return((w * R) + ((1 - w) * F))
 
 # Get our model predictions
