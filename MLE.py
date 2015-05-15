@@ -36,11 +36,9 @@ r = np.arange(N, dtype = 'float64')
 for i in range(N):
   r[i] = np.random.normal(loc=rft_pred[i], scale=sd, size=1)[0]
 
-
 # Keep responses between 0 and 1
 r[r<0] = 0
 r[r>1] = 1
-
 
 # Define function to return likelihood of data given 
 # values of w and sd. Small values = higher likelihood
