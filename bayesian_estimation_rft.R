@@ -1,4 +1,4 @@
-# File:           MLE.R
+# File:           bayesian_estimation_rft.R
 # Version:        1
 # Last changed:   Friday 15th May 2015
 # Purpose:        Example Bayesian estimation code for R and JAGS
