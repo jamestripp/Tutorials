@@ -21,9 +21,9 @@ sd = 0.01;
 # Define function for our model
 # Here we use range frequency theory
 def rft(w):
-  R = (s - s.min())/(s.max() - s.min())
-  F = np.arange(N, dtype = 'float64')/(s.size - 1)
-return((w * R) + ((1 - w) * F))
+    R = (s - s.min())/(s.max() - s.min())
+    F = np.arange(N, dtype = 'float64')/(s.size - 1)
+    return((w * R) + ((1 - w) * F))
 
 # Get our model predictions
 rft_pred = rft(w)
@@ -43,14 +43,14 @@ r[r>1] = 1
 # Define function to return likelihood of data given 
 # values of w and sd. Small values = higher likelihood
 def get_lhood(p):
-  w = 1/(1 + m.exp(-p[0])) #keep w between 0 and 1
-  pred = rft(w)
-  lnL = np.arange(N, dtype = 'float64')
+    w = 1/(1 + m.exp(-p[0])) #keep w between 0 and 1
+    pred = rft(w)
+    lnL = np.arange(N, dtype = 'float64')
   
-  for i in range(N):
-    lnL[i] = -2 * m.log(stats.norm(pred[i], p[1]).pdf(r[i]))
-
-return(sum(lnL))
+    for i in range(N):
+        lnL[i] = -2 * m.log(stats.norm(pred[i], p[1]).pdf(r[i]))
+    
+    return(sum(lnL))
 
 # Set starting values for minimization function
 x0 = np.array([0, 1])
