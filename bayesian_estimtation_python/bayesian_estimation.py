@@ -8,6 +8,7 @@
 import model_definition
 
 from pymc import *
-#model = MCMC(model)
-#model.sample(iter=500)
-#print(model.stats())
+
+model = MCMC(model_definition)
+model.sample(iter=3000)
+print(model.stats())

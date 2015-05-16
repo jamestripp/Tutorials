@@ -12,12 +12,12 @@ from scipy.optimize import minimize
 import math as m
 
 # Define our stimuli
-s = np.array([1, 2, 3, 4, 7, 9, 11, 13, 16, 21, 18,], dtype = 'float64')
+s = np.array([1, 2, 3, 4, 7, 9, 11, 13, 16, 21, 18], dtype = 'float64')
 N = s.size # number of stimuli
 
 # Define parameters for generating our false data
-w = 0.1;
-sd = 0.08;
+w = 0.9;
+sd = 0.001;
 
 R = (s - s.min())/(s.max() - s.min())
 F = np.arange(N, dtype = 'float64')/(s.size - 1)
@@ -50,16 +50,10 @@ def precision(std_dev=sigma):
     return 1.0 / (std_dev * std_dev)
 
 @deterministic(plot=False)
-def rft_pred(w=bayes_w, range = bayes_range, rank = bayes_rank):
-    return (w * range) + ((1 - w) * rank)
+def rft_pred(w = bayes_w):
+    return rft(w)
+
+prediction = rft_pred
 
 for i in range(11):
-    bayes_range = R[i]
-    bayes_rank = F[i]
-    process[i] = Normal('process', mu = rft_pred, tau=precision, value=r[i], observed=True)
-
-
-
-
-
-
+    pred = Normal('Pred', mu=prediction[i], tau=precision, value=r[i], observed=True)
