@@ -1,3 +1,4 @@
+from pymc import *
 # File:           MLE.py
 # Version:        1
 # Last changed:   Friday 15th May 2015
@@ -15,8 +16,8 @@ s = np.array([1, 2, 3, 4, 7, 9, 11, 13, 16, 21, 18,], dtype = 'float64')
 N = s.size # number of stimuli
 
 # Define parameters for generating our false data
-w = 0.5;
-sd = 0.01;
+w = 0.1;
+sd = 0.08;
 
 R = (s - s.min())/(s.max() - s.min())
 F = np.arange(N, dtype = 'float64')/(s.size - 1)
@@ -41,28 +42,24 @@ for i in range(N):
 r[r<0] = 0
 r[r>1] = 1
 
-# Define function to return likelihood of data given 
-# values of w and sd. Small values = higher likelihood
-def get_lhood(p):
-    w = 1/(1 + m.exp(-p[0])) #keep w between 0 and 1
-    pred = rft(w)
-    lnL = np.arange(N, dtype = 'float64')
-  
-    for i in range(N):
-        lnL[i] = -2 * m.log(stats.norm(pred[i], p[1]).pdf(r[i]))
-    
-    return(sum(lnL))
+bayes_w = Uniform('bayes_w', lower=0, upper=1)
+sigma = Uniform('sigma', lower = 0, upper = 1000)
 
-# Set starting values for minimization function
-x0 = np.array([0, 1])
+@deterministic(plot=False)
+def precision(std_dev=sigma):
+    return 1.0 / (std_dev * std_dev)
 
-# Run minimization function to estimtate w and sd
-res = minimize(get_lhood, x0, method='nelder-mead',
-               options={'xtol': 1e-8, 'disp': True})
+@deterministic(plot=False)
+def rft_pred(w=bayes_w, range = bayes_range, rank = bayes_rank):
+    return (w * range) + ((1 - w) * rank)
 
-# Print out the result
-print "Our generating value for w is", w
-print "Our estimate for w is", 1/(1+m.exp(-res.x[0]))
+for i in range(11):
+    bayes_range = R[i]
+    bayes_rank = F[i]
+    process[i] = Normal('process', mu = rft_pred, tau=precision, value=r[i], observed=True)
 
-print "Our generating value for sd is", sd
-print "Our estimate for sd is", res.x[1]
+
+
+
+
+
