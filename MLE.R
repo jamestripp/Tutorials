@@ -12,18 +12,17 @@ s <- c(1, 2, 3, 4, 7, 9, 11, 13, 16, 21, 18);
 w <- 0.2
 SD <- 0.01
 
+# The position of each stimulus in the range.
+r <- (s - min(s))/(max(s) - min(s))
+
+# The rank of the stimulus within the stimuli.
+f <- (1:length(s) - 1) / (length(s) - 1)
+
 # Define our model. Here we give a function implementing 
 # range frequency theory. 
-range_frequency_theory <- function(s, w) {
-  
-  # The position of each stimulus in the range.
-  range <- (s - min(s))/(max(s) - min(s))
-  
-  # The rank of the stimulus within the stimuli.
-  frequency <- (1:length(s) - 1) / (length(s) - 1)
-  
+range_frequency_theory <- function(w) {
   # Our predictions are a weighted average of the range and rank position.
-  (w * range) + ((1 - w) * frequency)
+  (w * r) + ((1 - w) * f)
 }
 
 
@@ -31,7 +30,7 @@ range_frequency_theory <- function(s, w) {
 # equal to the predictions of the range frequency model and 
 # normally distributed noise.
 responses <- rnorm(n = length(s), 
-                   mean = range_frequency_theory(s, w), sd = SD)
+                   mean = range_frequency_theory(w), sd = SD)
 
 # Keep values between 0 and 1.
 responses[responses > 1] <- 1
@@ -56,7 +55,7 @@ wrapper <- function(par, s, responses){
   w = 1/(1+exp(-par[1]))
 
   sd = par[2]
-  likelihood(responses, range_frequency_theory(s, w), sd)
+  likelihood(responses, range_frequency_theory(w), sd)
 }
 
 # Run our algorithm with a starting value of 0.5 for both sd and w
