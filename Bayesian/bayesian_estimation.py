@@ -6,6 +6,8 @@
 # Author:         Dr James Tripp
 # Copyright:      (C) James Tripp 2015
 
+import numpy as np
+
 # load model definition file
 import model_definition
 
@@ -20,3 +22,7 @@ model.sample(iter=3000)
 
 # Print posterior estimates
 print(model.stats())
+
+# Medians of our posteriors
+print np.median(model.trace('bayes_w')[:])
+print np.median(model.trace('sigma')[:])

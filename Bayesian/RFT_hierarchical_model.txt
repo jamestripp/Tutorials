@@ -1,0 +1,40 @@
+model{
+  # passed to model
+  #   N = number of data points
+  #   range = pure range prediction
+  #   rank = pure rank prediction
+  #   response = participant responses
+  #   n.ppts = number of participants
+  
+  # group level priors
+  width ~ dexp(1) #width of indivdiual w distribution
+  
+  grp.w.mu ~ dunif(0, 1)
+  grp.w.width <- width + 1
+  
+  grp.sd.mu ~ dnorm(0, 1)
+  grp.sd.sigma ~ dnorm(0, 1)
+  grp.sd.precision <- pow(grp.sd.sigma, -2)
+  
+  for (ppt.idx in 1:n.ppts){
+    
+    #individual w parameter priors
+    w.alpha[ppt.idx] <- grp.w.width * grp.w.mu + 1/3
+    w.beta[ppt.idx] <- grp.w.width * (1 - grp.w.mu) + 1/3
+    w[ppt.idx] ~ dbeta(w.alpha[ppt.idx], w.beta[ppt.idx])
+    
+    #individual sd parameter priors
+    sd.phi[ppt.idx] ~ dnorm(grp.sd.mu, grp.sd.precision) T(-5, 5)
+    sd.pre[ppt.idx] <- phi(sd.phi[ppt.idx])
+    sd[ppt.idx] <- sd.pre[ppt.idx] * 100
+    
+    tau[ppt.idx] <- pow(sd[ppt.idx], -2)
+    
+    #model prediction and likelihood function
+    for (item.idx in 1:N){
+      rft[ppt.idx, item.idx] <- (w[ppt.idx] * range[ppt.idx, item.idx]) + ((1 - w[ppt.idx]) * rank[ppt.idx, item.idx])
+      response[ppt.idx, item.idx] ~ dnorm(rft[ppt.idx, item.idx], tau[ppt.idx])
+    }
+    
+  }
+}
