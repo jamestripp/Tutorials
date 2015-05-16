@@ -44,10 +44,11 @@ r[r>1] = 1
 # values of w and sd. Small values = higher likelihood
 def get_lhood(p):
   w = 1/(1 + m.exp(-p[0])) #keep w between 0 and 1
-pred = rft(w)
-lnL = np.arange(N, dtype = 'float64')
-for i in range(N):
-  lnL[i] = -2 * m.log(stats.norm(pred[i], p[1]).pdf(r[i]))
+  pred = rft(w)
+  lnL = np.arange(N, dtype = 'float64')
+  
+  for i in range(N):
+    lnL[i] = -2 * m.log(stats.norm(pred[i], p[1]).pdf(r[i]))
 
 return(sum(lnL))
 
