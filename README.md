@@ -2,7 +2,9 @@
 
 These tutorials are snippets of code. The code is fully commented and the examples should be straightforward.
 I have written the code so that a PhD student in Psychology, or someone with little coding experience 
-can try out the methods.
+can try out the methods. Where possible functionally equivilant code is writted for R, MATLAB and Python.
+
+If you have any comments, queries or suggestions then feel free to cntact me at james.tripp@warwick.ac.uk.
 
 ## Maximum likelihood estimation (/MLE)
 
