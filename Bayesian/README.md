@@ -22,6 +22,6 @@ In this folder we have three examples of Bayesian parameter estimation.
 
 1. Bayesian_estimation_rft.R generates data from the range frequency model and then fits a bayesian model to the data using JAGS.
 2. Bayesian_estimation.py also generates data from the range frequency model but this time uses pymcmc to fit the model to the data.
-3. Hierarchical_bayes_rft.r generates data from several simulated participants. Unlike the other two examples, the participant parameter is taken from a group level distribution (i.e., their compromise between range and rank is similar). Hierarchical estimation assumes that there is a group level distribution. The upside of this approach is that it maximises the information we gain from all the data. The downside is that  generates data from several simulated participants. Unlike the other two examples, the participant parameter is taken from a group level distribution (i.e., their compromise between range and rank is similar).  
+3. Hierarchical_bayes_rft.r generates data from several simulated participants. Unlike the other two examples, the participant parameter is taken from a group level distribution (i.e., their compromise between range and rank is similar). Hierarchical estimation assumes that there is a group level distribution. See [this](http://www.ejwagenmakers.com/2011/NilssonEtAl2011.pdf) paper for a nice example.  
 
 There is more information about each example in the files above. If you have any questions then feel free to contact me on james.tripp@warwick.ac.uk
