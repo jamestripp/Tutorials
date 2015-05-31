@@ -6,6 +6,8 @@ can try out the methods. Where possible functionally equivilant code is writted 
 
 If you have any comments, queries or suggestions then feel free to cntact me at james.tripp@warwick.ac.uk.
 
+At present there are example of maximum likelihood estimation(/MLE) and bayesian modeling(/Bayesian) in this directory. Both methods have their advantages and disadvantages (see below). Feel free to download and use these examples. In each directory there is a more detailed description of the method being demonstrated in each file.
+
 ## Maximum likelihood estimation (/MLE)
 
 Cognitive psychologists often want to fit a model to data. Models take a set of inputs (e.g., stimuli presented to participants) 
