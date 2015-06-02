@@ -1,3 +1,10 @@
+# File:           scrape_imdb_rating.R
+# Version:        1
+# Last changed:   Tuesday 2nd June 2015
+# Purpose:        Plot mean user ratings of N films 
+# Author:         Dr James Tripp
+# Copyright:      (C) James Tripp 2015
+
 rm(list=ls())
 
 library('rvest')
@@ -37,5 +44,5 @@ for (i in 1:N) {
 }
 
 # histogram of ratings. NAs are ignored
-p <- hist(x = rating, main = 'Imdb ratings', xlab = 'User rating')
+p <- hist(x = rating, main = 'Imdb ratings', xlab = 'Mean user rating')
 print(p)
