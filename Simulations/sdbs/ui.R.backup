@@ -1,0 +1,37 @@
+library(shiny)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("Range effects: SIMPLE and DbS"),
+  
+  # Sidebar with a slider input for the number of bins
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("c",
+                  "Confusability:",
+                  min = 0.01,
+                  max = 20,
+                  value = 1),
+      sliderInput("s",
+                  "Slope:",
+                  min = 0.01,
+                  max = 20,
+                  value = 18),
+      p('Above are parameters for the SIMPLE model of item distinctiveness. 
+        Confusability represents how easily one item is confused with another.
+        The relative spacing of items has the greatest effect when confusability is low.
+        Slope represent the scale of the differences in discriminability of items.
+        High value of slope accentuate differences in discriminability.'),
+      p('The discriminability of the items are shown in the top panes of the right hand figure.
+       Here we use the stimuli from Brown, et al (2008). The discriminability of the items 
+      are entered into the relative rank DbS model. The predictions are shown in the bottom panes')
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+))
